@@ -121,9 +121,9 @@ kubectl get services
    
    | Service            | Description                                | Github Repo                                                                    |
    |--------------------|--------------------------------------------|--------------------------------------------------------------------------------|
-   | `store-front`      | Web app for customers to place orders      | [store-front-bestbuy](https://github.com/mspanwar21/store-front)               |
-   | `store-admin`      | Web app for store employees                | [store-admin-bestbuy](https://github.com/mspanwar21/store-admin)               |
-   | `order-service`    | Handles order placement                    | [order-main](https://github.com/mspanwar21/order-service)                      |
+   | `store-front`      | Web app for customers to place orders      | [store-front](https://github.com/mspanwar21/store-front)                       |
+   | `store-admin`      | Web app for store employees                | [store-admin](https://github.com/mspanwar21/store-admin)                       |
+   | `order-service`    | Handles order placement                    | [order-service](https://github.com/mspanwar21/order-service)                   |
    | `product-service`  | Handles CRUD operations on products        | [product-service](https://github.com/mspanwar21/product-service)               |
    | `makeline-service` | Processes and completes orders             | [makeline-service](https://github.com/mspanwar21/makeline-service)             |
    | `ai-service`       | AI-based product descriptions and images   | [AI-service](https://github.com/mspanwar21/AI-service)                         |
