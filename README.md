@@ -172,7 +172,23 @@ kubectl get services
 | Vitrual-customer  | [DOCKER HUB LINK ](https://hub.docker.com/r/mohitsp21/virtual-customer)     |
 | Vitrual- worker   | [DOCKER HUB LINK ](https://hub.docker.com/r/mohitsp21/virtual-worker)       |
 
-## Problems 
+### Problems
+
+## AI Integration Issue
+
+Despite multiple attempts, I was unable to successfully deploy and integrate the AI services due to the following reasons:
+
+1. Region Limitations:  
+   The Azure OpenAI service was not available in the default region of my subscription. I explored and tested all available regions where GPT-4 and DALL·E might be accessible, but none were supported under my account at the time.
+
+2. Quota Limitations:  
+   My Azure subscription had **exceeded the usage quota** and **credits were exhausted**, preventing further access or deployment of any AI resources.
+
+3. **Service Deprecation:**  
+   I attempted to use **DALL·E 2** as a fallback option, but it had already been **retired**, and the newer **DALL·E 3** required specific configuration and access which was unavailable due to the above limitations.
+
+> 🔍 *Although the AI-Service component is structured and ready in the deployment, the actual AI generation functionality could not be demonstrated due to these constraints.*
+
 
 # Demo video
 [Click_Here_to_Watch_Video](https://youtu.be/I_OcTkZDYAE)
