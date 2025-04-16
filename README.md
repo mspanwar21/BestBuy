@@ -187,7 +187,27 @@ Despite multiple attempts, I was unable to successfully deploy and integrate the
 3. **Service Deprecation:**  
    I attempted to use **DALL·E 2** as a fallback option, but it had already been **retired**, and the newer **DALL·E 3** required specific configuration and access which was unavailable due to the above limitations.
 
-> 🔍 *Although the AI-Service component is structured and ready in the deployment, the actual AI generation functionality could not be demonstrated due to these constraints.*
+>  *Although the AI-Service component is structured and ready in the deployment, the actual AI generation functionality could not be demonstrated due to these constraints.*
+
+##  Attempted Integration with Azure Service Bus
+
+One of the challenges faced during the development of this application was attempting to replace RabbitMQ with **Azure Service Bus** to align the architecture more closely with cloud-native messaging services. I followed the standard integration steps:
+
+1. Created a **Service Bus namespace** and a **queue** in the Azure Portal.  
+2. Updated the application configuration to include the Service Bus connection string and queue name.  
+3. Attempted to use the `Azure.Messaging.ServiceBus` SDK to publish and consume messages within the `Order-Service`.
+
+However, integration issues arose due to the following reasons:
+- The **Service Bus client library requires asynchronous programming patterns**, which conflicted with some parts of the existing synchronous RabbitMQ logic.
+- **Debugging was further complicated by the lack of local emulation support for Azure Service Bus**, unlike RabbitMQ which can be easily run locally using Docker.
+
+To elaborate on the local debugging challenge:
+- I initially attempted to **debug the Azure Service Bus integration locally** by looking for a local emulator, but **Azure does not provide an official emulator for Service Bus**.
+- I tried using [Azurite](https://github.com/Azure/Azurite), Azure's official emulator, only to find that it supports **Blob, Queue, and Table storage**, not Service Bus.
+- I also explored third-party Docker images and tools that claimed to emulate Service Bus behavior, but they lacked proper support and didn’t integrate well with the Azure SDK.
+- I attempted to use the **ServiceBusProcessor** for local testing, but it required a live Azure Service Bus instance, which introduced latency and made offline development impossible.
+
+I reverted to using **RabbitMQ**, which allowed quick local setup and testing via Docker. This ensured I could demonstrate the core functionality of order communication and processing between services effectively.
 
 
 # Demo video
