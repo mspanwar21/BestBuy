@@ -9,8 +9,6 @@ This repository contains a cloud-native, microservices-based demo application fo
 
 # Connecting Order-Service to Azure Service Bus
 
-This guide walks through the steps to connect the `order-service` microservice to Azure Service Bus using either **Managed Identity** or **Shared Access Policy** authentication.
-
 ---
 
 ## ✅ Step 1: Create Azure Resources
