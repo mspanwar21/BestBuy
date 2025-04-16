@@ -26,8 +26,106 @@ az servicebus queue create \
   --name orders \
   --namespace-name BestBuyNamespace \
   --resource-group BestBuyRg
-
 ```
+
+---
+
+## 🔐 Step 2: Set Up Authentication
+
+### 🔸 Option A: Using Managed Identity (Recommended)
+
+```bash
+SERVICEBUSBID=$(az servicebus namespace show \
+  --name BestBuyNamespace \
+  --resource-group BestBuyRg \
+  --query id -o tsv)
+
+az role assignment create \
+  --assignee degu0055@algonquinlive.com \
+  --role "Azure Service Bus Data Sender" \
+  --scope $SERVICEBUSBID
+```
+
+---
+
+## ⚙️ Step 3: Save Environment Variables
+
+> Ensure you are inside the `order-service` directory.
+
+```bash
+HOSTNAME=$(az servicebus namespace show \
+  --name BestBuyNamespace \
+  --resource-group BestBuyRg \
+  --query serviceBusEndpoint -o tsv | sed 's/https:\/\///;s/:443\///')
+
+cat << EOF > .env
+USE_WORKLOAD_IDENTITY_AUTH=true
+AZURE_SERVICEBUS_FULLYQUALIFIEDNAMESPACE=$HOSTNAME
+ORDER_QUEUE_NAME=orders
+EOF
+
+source .env
+```
+
+---
+
+## 🐳 Step 4: Build & Push Docker Image
+
+```bash
+docker buildx build --platform linux/amd64 \
+  -t degu0055/order-service-bestbuy:latest \
+  --push .
+```
+
+---
+
+## 🔐 Step 5: Create Authorization Rule (Shared Access Policy)
+
+```bash
+az servicebus queue authorization-rule create \
+  --name sender \
+  --namespace-name BestBuyNamespace \
+  --resource-group BestBuyRg \
+  --queue-name orders \
+  --rights Send
+```
+
+---
+
+## 🔄 Step 6: Alternative - Use Shared Access Policy Credentials
+
+```bash
+HOSTNAME=$(az servicebus namespace show \
+  --name BestBuyNamespace \
+  --resource-group BestBuyRg \
+  --query serviceBusEndpoint -o tsv | sed 's/https:\/\///;s/:443\///')
+
+PASSWORD=$(az servicebus queue authorization-rule keys list \
+  --namespace-name BestBuyNamespace \
+  --resource-group BestBuyRg \
+  --queue-name orders \
+  --name sender \
+  --query primaryKey -o tsv)
+
+cat << EOF > .env
+ORDER_QUEUE_HOSTNAME=$HOSTNAME
+ORDER_QUEUE_PORT=5671
+ORDER_QUEUE_USERNAME=sender
+ORDER_QUEUE_PASSWORD="$PASSWORD"
+ORDER_QUEUE_TRANSPORT=tls
+ORDER_QUEUE_RECONNECT_LIMIT=10
+ORDER_QUEUE_NAME=orders
+EOF
+
+source .env
+```
+
+---
+
+## ✅ Final Note
+
+Deploy your updated container image using your Kubernetes `aps-all-in-one.yaml` configuration to complete integration of `order-service` with Azure Service Bus.
+
 
 ## Used Architecture Diagram
 
