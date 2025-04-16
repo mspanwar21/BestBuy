@@ -6,6 +6,28 @@ This repository contains a cloud-native, microservices-based demo application fo
 
 ![image](https://github.com/user-attachments/assets/4ce7bd0c-e707-485c-bea4-3f31589f2c6c)
 
+
+# Connecting Order-Service to Azure Service Bus
+
+This guide walks through the steps to connect the `order-service` microservice to Azure Service Bus using either **Managed Identity** or **Shared Access Policy** authentication.
+
+---
+
+## ✅ Step 1: Create Azure Resources
+
+```bash
+az group create --name BestBuyRg --location canadacentral
+
+az servicebus namespace create \
+  --name BestBuyNamespace \
+  --resource-group BestBuyRg
+
+az servicebus queue create \
+  --name orders \
+  --namespace-name BestBuyNamespace \
+  --resource-group BestBuyRg
+
+
 ## Used Architecture Diagram
 
 ![bestar](https://github.com/user-attachments/assets/670e611f-9e66-43a8-a534-d46136212ed9)
