@@ -4,7 +4,7 @@ This repository contains a cloud-native, microservices-based demo application fo
 
 ## Updated Architecture Diagram
 
-![image](https://github.com/user-attachments/assets/4680d8a1-5950-4e26-922b-efd3e25008f9)
+![image](https://github.com/user-attachments/assets/4ce7bd0c-e707-485c-bea4-3f31589f2c6c)
 
 
 ![bestar](https://github.com/user-attachments/assets/670e611f-9e66-43a8-a534-d46136212ed9)
