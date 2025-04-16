@@ -340,5 +340,5 @@ I reverted to using **RabbitMQ**, which allowed quick local setup and testing vi
 
 
 # Demo video
-[Click_Here_to_Watch_Video](https://youtu.be/I_OcTkZDYAE)
+[Click_Here_to_Watch_Video](https://youtu.be/8W-7mNxEGEQ)
 
