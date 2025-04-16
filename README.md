@@ -299,8 +299,10 @@ kubectl get services
 | Vitrual-customer  | [DOCKER HUB LINK ](https://hub.docker.com/r/mohitsp21/virtual-customer)     |
 | Vitrual- worker   | [DOCKER HUB LINK ](https://hub.docker.com/r/mohitsp21/virtual-worker)       |
 
-### Problems
+---
 
+##  Problems
+---
 ## AI Integration Issue
 
 Despite multiple attempts, I was unable to successfully deploy and integrate the AI services due to the following reasons:
