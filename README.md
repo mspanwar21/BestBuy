@@ -122,7 +122,11 @@ source .env
 
 ## Final Note
 
-Deploy your updated container image using your Kubernetes `aps-all-in-one.yaml` configuration to complete integration of `order-service` with Azure Service Bus.
+Deploy your updated container image using your Kubernetes `all-in-one.yaml` configuration to complete integration of `order-service` with Azure Service Bus.
+
+## Limitations / Additional Notes
+
+Unfortunately, I was not able to successfully run the `order-service` using Azure Service Bus due to integration issues and local testing limitations. As a backup, I created an `all-in-one.yaml` file intended to consolidate the services and simplify deployment. However, this file was not used in the final implementation, as the primary focus was to demonstrate functionality using RabbitMQ for message brokering.
 
 
 ## Used Architecture Diagram
