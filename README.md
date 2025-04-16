@@ -11,49 +11,49 @@ This repository contains a cloud-native, microservices-based demo application fo
 
 ---
 
-## ✅ Step 1: Create Azure Resources
+##  Step 1: Create Azure Resources
 
 ```bash
-az group create --name BestBuyRg --location canadacentral
+az group create --name BestBuy --location canadacentral
 
 az servicebus namespace create \
   --name BestBuyNamespace \
-  --resource-group BestBuyRg
+  --resource-group BestBuy
 
 az servicebus queue create \
   --name orders \
   --namespace-name BestBuyNamespace \
-  --resource-group BestBuyRg
+  --resource-group BestBuy
 ```
 
 ---
 
-## 🔐 Step 2: Set Up Authentication
+##  Step 2: Set Up Authentication
 
-### 🔸 Option A: Using Managed Identity (Recommended)
+###  Option A: Using Managed Identity (Recommended)
 
 ```bash
 SERVICEBUSBID=$(az servicebus namespace show \
   --name BestBuyNamespace \
-  --resource-group BestBuyRg \
+  --resource-group BestBuy \
   --query id -o tsv)
 
 az role assignment create \
-  --assignee degu0055@algonquinlive.com \
+  --assignee panw0011@algonquinlive.com \
   --role "Azure Service Bus Data Sender" \
   --scope $SERVICEBUSBID
 ```
 
 ---
 
-## ⚙️ Step 3: Save Environment Variables
+##  Step 3: Save Environment Variables
 
 > Ensure you are inside the `order-service` directory.
 
 ```bash
 HOSTNAME=$(az servicebus namespace show \
   --name BestBuyNamespace \
-  --resource-group BestBuyRg \
+  --resource-group BestBuy \
   --query serviceBusEndpoint -o tsv | sed 's/https:\/\///;s/:443\///')
 
 cat << EOF > .env
@@ -67,40 +67,40 @@ source .env
 
 ---
 
-## 🐳 Step 4: Build & Push Docker Image
+## Step 4: Build & Push Docker Image
 
 ```bash
 docker buildx build --platform linux/amd64 \
-  -t degu0055/order-service-bestbuy:latest \
+  -t mohitsp21/order-service:latest \
   --push .
 ```
 
 ---
 
-## 🔐 Step 5: Create Authorization Rule (Shared Access Policy)
+## Step 5: Create Authorization Rule (Shared Access Policy)
 
 ```bash
 az servicebus queue authorization-rule create \
   --name sender \
   --namespace-name BestBuyNamespace \
-  --resource-group BestBuyRg \
+  --resource-group BestBuy \
   --queue-name orders \
   --rights Send
 ```
 
 ---
 
-## 🔄 Step 6: Alternative - Use Shared Access Policy Credentials
+## Step 6: Alternative - Use Shared Access Policy Credentials
 
 ```bash
 HOSTNAME=$(az servicebus namespace show \
   --name BestBuyNamespace \
-  --resource-group BestBuyRg \
+  --resource-group BestBuy \
   --query serviceBusEndpoint -o tsv | sed 's/https:\/\///;s/:443\///')
 
 PASSWORD=$(az servicebus queue authorization-rule keys list \
   --namespace-name BestBuyNamespace \
-  --resource-group BestBuyRg \
+  --resource-group BestBuy \
   --queue-name orders \
   --name sender \
   --query primaryKey -o tsv)
@@ -120,7 +120,7 @@ source .env
 
 ---
 
-## ✅ Final Note
+## Final Note
 
 Deploy your updated container image using your Kubernetes `aps-all-in-one.yaml` configuration to complete integration of `order-service` with Azure Service Bus.
 
