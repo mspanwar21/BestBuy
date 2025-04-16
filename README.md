@@ -27,6 +27,7 @@ az servicebus queue create \
   --namespace-name BestBuyNamespace \
   --resource-group BestBuyRg
 
+```
 
 ## Used Architecture Diagram
 
