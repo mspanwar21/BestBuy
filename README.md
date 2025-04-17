@@ -126,7 +126,8 @@ Deploy your updated container image using your Kubernetes `all-in-one.yaml` conf
 
 ## Limitations / Additional Notes
 
-Unfortunately, I was not able to successfully run the `order-service` using Azure Service Bus due to integration issues and local testing limitations. As a backup, I created an `all-in-one.yaml` file intended to consolidate the services and simplify deployment. However, this file was not used in the final implementation, as the primary focus was to demonstrate functionality using RabbitMQ for message brokering.
+Unfortunately, I was not able to successfully run the `order-service` using Azure Service Bus due to integration issues and local testing limitations. As a backup, I created an `all-in-one.yaml` file intended to consolidate the services and simplify deployment. However, this file was not used in the final implementation, as the primary focus was to demonstrate functionality using RabbitMQ for message brokering. OR might be an Authentication Issues application failed to authenticate correctly. The service couldn't establish a connection to Azure 
+   Service Bus, possibly due to misconfigured credentials.
 
 
 ## Used Architecture Diagram
@@ -329,8 +330,10 @@ One of the challenges faced during the development of this application was attem
 However, integration issues arose due to the following reasons:
 - The **Service Bus client library requires asynchronous programming patterns**, which conflicted with some parts of the existing synchronous RabbitMQ logic.
 - **Debugging was further complicated by the lack of local emulation support for Azure Service Bus**, unlike RabbitMQ which can be easily run locally using Docker.
+- Authentication Issues: The application failed to authenticate correctly. The service couldn't establish a connection to Azure 
+   Service Bus, possibly due to misconfigured credentials or lack of environment variable support within the containerized environment.
 
-To elaborate on the local debugging challenge:
+To local debugging challenge:
 - I initially attempted to **debug the Azure Service Bus integration locally** by looking for a local emulator, but **Azure does not provide an official emulator for Service Bus**.
 - I tried using [Azurite](https://github.com/Azure/Azurite), Azure's official emulator, only to find that it supports **Blob, Queue, and Table storage**, not Service Bus.
 - I also explored third-party Docker images and tools that claimed to emulate Service Bus behavior, but they lacked proper support and didn’t integrate well with the Azure SDK.
